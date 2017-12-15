@@ -1,0 +1,23 @@
+
+.mat-button {
+    padding: 0;
+    min-width: 25px;
+}
+.todo {
+    white-space: nowrap;
+    /* height: 25px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
+.crossed {
+    text-decoration:line-through;
+}
+.mat-card-actions {
+    margin: 0px;
+}
+
+.example-full-width {
+    width: 100%;
+    padding-left: 5px;
+}

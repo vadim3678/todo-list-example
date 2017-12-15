@@ -1,0 +1,70 @@
+<div style="text-align:center">
+    <h1>
+        Welcome to {{title}}!
+    </h1>
+    <div fxLayout="row" fxLayoutAlign="space-around center"  *ngIf="loading"><mat-spinner ></mat-spinner></div>
+    
+    <form *ngIf="!loading" [formGroup]="todoForm">
+        <mat-card>
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <div class="blocks" fxLayoutAlign="start" fxFlex="10%">
+                        <button mat-button (click)="addItem(text.value); text.value = ''">
+                            <i class="material-icons md-dark">add</i></button>                        
+                    </div>
+
+                    <div class="blocks" fxLayoutAlign="start" fxFlex="90%">
+                        <mat-form-field class="example-full-width">
+                            <input matInput #text placeholder="Add a to-do...">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+<div formArrayName="arrTodo">
+        <div *ngFor="let item of todoForm.controls.arrTodo.controls; let i=index" style="text-align:center" >
+            <div [formGroupName]="i">
+            <mat-card>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayoutAlign="space-around center">
+                        <div class="blocks" fxLayoutAlign="start" fxFlex="10%">
+                            <mat-checkbox formControlName="isChecked" *ngIf="!item.controls.isEdit.value" (click)="checkItem(item.controls.id.value)">
+                            </mat-checkbox>
+                        </div>
+
+                        <div *ngIf="!item.controls.isEdit.value" class="blocks" fxLayoutAlign="start" fxFlex="70%">
+                            <p class="todo" [ngClass]="{'crossed': item.controls.isChecked.value }">{{ item.controls.content.value }}</p>
+                        </div>
+                        <div *ngIf="item.controls.isEdit.value" class="blocks" fxLayoutAlign="start" fxFlex="80%">
+                            <mat-form-field class="example-full-width">
+                                <input matInput formControlName="content"  placeholder="Edit a to-do...">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="blocks" fxLayoutAlign="end" fxFlex="20%">
+                            <mat-card-actions>
+                                <div fxLayout="row">
+                                    <button *ngIf="!item.controls.isEdit.value" mat-button (click)="editItem(item.controls.id.value)">
+                                        <i class="material-icons">mode_edit</i>
+                                    </button>
+                                    <button *ngIf="item.controls.isEdit.value" mat-button 
+                                            (click)="saveItem(item.controls.content.value, item.controls.id.value)">
+                                        <i class="material-icons">done</i>
+                                    </button>
+                                    <button mat-button (click)="removeItem(item.controls.id.value)">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </div>
+                            </mat-card-actions>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        </div>
+
+    </div>
+    </form>  
+
+</div>
